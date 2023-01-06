@@ -2,12 +2,12 @@
 /*
 Plugin Name: 3D Model Customiser
 Description: Allows users to add and customize 3D models using three.js
-Version: Beta 0.0.4
+Version: Beta 0.0.5
 Author: Ryan Chippendale
 */
 
 function enqueue_plugin_styles() {
-    wp_enqueue_style( 'plugin-styles', plugin_dir_url( __FILE__ ) . 'plugin.css' );
+    wp_enqueue_style( 'plugin-styles', plugin_dir_url( __FILE__ ) . 'style.css' );
 }
 add_action( 'wp_enqueue_scripts', 'enqueue_plugin_styles' );
 
