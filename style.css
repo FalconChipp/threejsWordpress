@@ -1,0 +1,22 @@
+#lights-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#lights-container .light {
+    width: 50%;
+}
+
+.light {
+    margin-bottom: 10px;
+}
+
+.light label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.light input[type="number"] {
+    width: 100px;
+}
