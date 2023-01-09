@@ -8,3 +8,4 @@ This will include the following features;
 - For the user to add and edit lighting options through a dropdown menu and define the positions of the lights (Ambient, Spot, Directional, Point). Also to include the ability to add more than one light into a single scene
 
 Once the scene has been created, the aim is to add the scene to the page via a shortcode. 
+All scenes will be then stored in a submenu under the plugin (Similar to posts and pages) where each one could then be edited or deleted 
