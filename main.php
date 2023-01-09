@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: 3D Model Customiser
-Description: Allows users to add and customize 3D models using three.js
+Description: Allows users to add and customise 3D models using three.js
 Version: Beta 0.0.5
 Author: Ryan Chippendale
 */
@@ -48,7 +48,7 @@ add_action( 'init', 'register_3d_model_customizer' );
 
 function enqueue_3d_model_customizer_scripts() {
     wp_enqueue_script( 'threejs', 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js', array(), 'r121', true );
-    wp_enqueue_script( '3d-model-customizer', plugin_dir_url( __FILE__ ) . '3d-model-customizer.js', array( 'threejs' ), '1.0', true );
+    // wp_enqueue_script( '3d-model-customizer', plugin_dir_url( __FILE__ ) . '3d-model-customizer.js', array( 'threejs' ), '1.0', true );
 }
 add_action( 'wp_enqueue_scripts', 'enqueue_3d_model_customizer_scripts' );
 
