@@ -2,7 +2,7 @@
 /*
 Plugin Name: 3D Model Customiser
 Description: Allows users to add and customise 3D models using three.js
-Version: Beta 0.0.5
+Version: Beta 0.0.6
 Author: Ryan Chippendale
 */
 
@@ -58,13 +58,35 @@ function add_3d_model_customizer_meta_box() {
 add_action( 'add_meta_boxes', 'add_3d_model_customizer_meta_box' );
 
 function render_3d_model_customizer_meta_box( $post ) {
-    $model_url = get_post_meta( $post->ID, 'model_url', true );
+    // $model_url = get_post_meta( $post->ID, 'model_url', true );
+
+    wp_nonce_field('my_meta_box_nonce', 'meta_nonce_box');
+    $models = get_posts(
+        array(
+            'post_type' => 'attachment',
+            'post_mime_type' => 'model/*',
+            'post_status' => 'inherit',
+            'posts_per_page' => -1
+        )
+    );
+
+    $model_options = array();
+    foreach ($models as $model) {
+        $model_options[$model->guid] = $model->post_title;
+    }
+
+    $current_model = get_post_meta($post->ID, '3d model', true);
+    echo '<label for="3d_model">Model:</label>';
+    echo '<select name="3d_model" id="3d_model">';
+    echo '<option value=""> Select a model</option>';
+    foreach ($model_options as $value => $label) {
+        echo '<option value="' . value . '" ' . selected($current_model, $value, false) . '>' . $label . '</option>';
+    }
+    echo '</select>';
+
     $lights = get_post_meta( $post->ID, 'lights', true );
     ?>
-    <p>
-        <label for="model_url">Model URL:</label><br>
-        <input type="text" name="model_url" id="model_url" value="<?php echo esc_attr( $model_url ); ?>">
-    </p>
+
     <h2>Lights</h2>
     <div id="lights-container">
         <?php
@@ -113,8 +135,11 @@ function render_3d_model_customizer_meta_box( $post ) {
 }
 
 function save_3d_model_customizer_meta_box( $post_id ) {
-    if ( isset( $_POST['model_url'] ) ) {
-        update_post_meta( $post_id, 'model_url', sanitize_text_field( $_POST['model_url'] ) );
+    if(!isset($_POST['meta_box_nonce']) || !wp_verify_nonce($_POST['meta_box_nonce'], 'my_meta_box_nonce')) {
+        return; 
+    }
+    if (isset($_POST['3d_model'])) {
+        update_post_meta($post_id, '3d_model', esc_url_raw($_POST['3d_model']));
     }
     if ( isset( $_POST['lights'] ) ) {
         $lights = array_map( function( $light ) {
@@ -128,7 +153,6 @@ function save_3d_model_customizer_meta_box( $post_id ) {
         update_post_meta( $post_id, 'lights', $lights );
     }
 }
-add_action( 'save_post', 'save_3d_model_customizer_meta_box' );
 
 function display_3d_model( $atts ) {
     $atts = shortcode_atts( array(
@@ -140,7 +164,7 @@ function display_3d_model( $atts ) {
     ?>
     <div id="3d-model-container"></div>
     <script>
-        var modelUrl = '<?php echo $atts['model_url']; ?>';
+        var modelUrl = document.getElementById('3d_model').value; 
         var lights = <?php echo json_encode( $atts['lights'] ); ?>;
         var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
