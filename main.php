@@ -155,11 +155,6 @@ function save_3d_model_customizer_meta_box( $post_id ) {
 }
 
 function display_3d_model( $atts ) {
-    $atts = shortcode_atts( array(
-        'model_url' => '',
-        'lights' => '',
-    ), $atts, '3d-model' );
-
     ob_start();
     ?>
     <div id="3d-model-container"></div>
@@ -213,4 +208,18 @@ animate();
     <?php
     return ob_get_clean();
 }
-add_shortcode( '3d-model', 'display_3d_model' );
+function create_3d_models_post_type() {
+    register_post_type(
+        '3d_models',
+        array(
+            'labels' => array(
+                'name' => __('3D Models'),
+                'singualar_name' => __('3D Model')
+            ),
+            'public' => true,
+            'has_archive' => true,
+            'supports' => array('title', 'editor', 'thumbnail')
+        )
+    );
+}
+add_action('init', 'create_3d_models_post_type');
