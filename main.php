@@ -2,7 +2,7 @@
 /*
 Plugin Name: 3D Model Customiser
 Description: Allows users to add and customise 3D models using three.js
-Version: Beta 0.0.6
+Version: ALPHA 0.0.8
 Author: Ryan Chippendale
 */
 
@@ -208,18 +208,21 @@ animate();
     <?php
     return ob_get_clean();
 }
-function create_3d_models_post_type() {
-    register_post_type(
-        '3d_models',
-        array(
-            'labels' => array(
-                'name' => __('3D Models'),
-                'singualar_name' => __('3D Model')
-            ),
-            'public' => true,
-            'has_archive' => true,
-            'supports' => array('title', 'editor', 'thumbnail')
-        )
-    );
-}
-add_action('init', 'create_3d_models_post_type');
+
+// TO FIX: CAUSES DUPLICATE POST TYPE 
+
+// function create_3d_models_post_type() {
+//     register_post_type(
+//         '3d_models',
+//         array(
+//             'labels' => array(
+//                 'name' => __('3D Models'),
+//                 'singualar_name' => __('3D Model')
+//             ),
+//             'public' => true,
+//             'has_archive' => true,
+//             'supports' => array('title', 'editor', 'thumbnail')
+//         )
+//     );
+// }
+// add_action('init', 'create_3d_models_post_type');
