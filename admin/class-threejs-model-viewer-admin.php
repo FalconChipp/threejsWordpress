@@ -1,4 +1,4 @@
-<php
+<?php
 class ThreeJS_Model_Viewer_Admin {
     private $version;
     private $plugin_slug;
@@ -8,7 +8,7 @@ class ThreeJS_Model_Viewer_Admin {
         $this->version = $version;
     }
     public function enqueue_styles() {
-        wp_enqueue_style($this->plugin_slug, plugin_dir-url(__FILE__) . 'css/admin.css', array(), $this->version, 'all');
+        wp_enqueue_style($this->plugin_slug, plugin_dir_url(__FILE__) . 'css/admin.css', array(), $this->version, 'all');
     }
     public function enqueue_scripts() {
         wp_enqueue_script($this->plugin_slug, plugin_dir_url(__FILE__) . 'js/admin.js', array('jquery'), $this->version, false);
@@ -23,19 +23,19 @@ class ThreeJS_Model_Viewer_Admin {
             array($this, 'display_model_manager_page'),
             'dashicons-admin-media',
             20
-        );''
+        );
     }
     public function display_model_manager_page() {
         if (!current_user_can('manage_options')) {
             return;
         }
 
-        echo '<div class="wrap">'
+        echo '<div class="wrap">';
         echo '<h1>' . esc_html(get_admin_page_title()) . '</h1>';
         echo '<form method="post" action="options.php">';
-            <!-- // Display form fields here -->
-        echo '</form>'
-        echo '</div>'
+            /* Display form fields here */
+        echo '</form>';
+        echo '</div>';
     }
     public function add_meta_boxes() {
         add_meta_box(
@@ -45,7 +45,7 @@ class ThreeJS_Model_Viewer_Admin {
             'post',
             'normal',
             'high'
-        )
+        );
     }
     public function render_meta_box($post) {
         wp_nonce_field('threejs_model_viewer_nonce_action', 'threejs_model_viewer_nonce'); 
