@@ -4,7 +4,7 @@
  * Plugin Name: ThreeJS Model Viewer
  * Plugin URI: FILL_IN_LATER
  * Plugin Description: Plugin to add ThreeJS Based Model Loading on WordPress Websites
- * Version: Alpha 0.0.4
+ * Version: Alpha 0.0.5
  * Author: Ryan Chippendale
  * Author URI: FILL_IN_LATER
  * License: GPL2
@@ -21,14 +21,15 @@
 
     public function __construct() {
         $this->plugin_slug = 'threejs-model-viewer';
-        $this->version = 'Alpha 0.0.4';
+        $this->version = 'Alpha 0.0.5';
 
         $this->load_dependencies(); 
         $this->define_admin_hooks();
     }
     private function load_dependencies() {
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-threejs-model-viewer-loader.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-threejs-model-viewer-admin.php';
+        require_once plugin_dir_path(__FILE__) . 'includes/class-threejs-model-viewer-loader.php';
+        require_once plugin_dir_path(__FILE__) . 'admin/class-threejs-model-viewer-admin.php';
+
         $this->loader = new ThreeJS_Model_Viewer_Loader(); 
     }
     private function define_admin_hooks() {
