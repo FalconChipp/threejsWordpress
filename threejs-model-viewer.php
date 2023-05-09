@@ -27,7 +27,7 @@
         $this->define_admin_hooks();
     }
     private function load_dependencies() {
-        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-threejs-model-viewer-admin.php';
+        require_once plugin_dir_path(__FILE__) . 'admin/class-threejs-model-viewer-admin.php';
         $this->loader = new ThreeJS_Model_Viewer_Loader(); 
     }
     private function define_admin_hooks() {
