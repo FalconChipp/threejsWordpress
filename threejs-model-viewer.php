@@ -4,7 +4,7 @@
  * Plugin Name: ThreeJS Model Viewer
  * Plugin URI: FILL_IN_LATER
  * Plugin Description: Plugin to add ThreeJS Based Model Loading on WordPress Websites
- * Version: Alpha 0.0.9
+ * Version: Alpha 0.0.11
  * Author: Ryan Chippendale
  * Author URI: FILL_IN_LATER
  * License: GPL2
@@ -16,12 +16,13 @@
 
  class ThreeJS_Model_Viewer {
     protected $loader;
+    protected $admin;
     protected $plugin_slug;
     protected $version;
 
     public function __construct() {
         $this->plugin_slug = 'threejs-model-viewer';
-        $this->version = '0.0.9';
+        $this->version = '0.0.11';
 
         $this->load_dependencies(); 
         $this->define_admin_hooks();
@@ -31,21 +32,24 @@
         require_once (plugin_dir_path(__FILE__) . 'admin/class-threejs-model-viewer-admin.php');
 
         $this->loader = new ThreeJS_Model_Viewer_Loader(); 
-        $this->loader = new ThreeJS_Model_Viewer_Admin($this->get_plugin_slug(), $this->get_plugin_version());
+        $this->admin = new ThreeJS_Model_Viewer_Admin($this->get_plugin_slug(), $this->get_plugin_version());
     }
     private function define_admin_hooks() {
         $admin = new ThreeJS_Model_Viewer_Admin($this->get_version());
-        $this->loader->add_action('admin_enqueue_scripts', $admin, 'enqueue_styles');
-        $this->loader->add_action('admin_enqueue_scripts', $admin, 'enqueue_scripts');
-        $this->loader->add_action('add_meta_boxes', $admin, 'add_meta-boxes');
-        $this->loader->add_action('save_post', $admin, 'save_post');
-        $this->loader->add_action('admin_menu', $admin, 'add_admin_menu');
+        $this->loader->add_action('admin_enqueue_scripts', $this->admin, 'enqueue_styles');
+        $this->loader->add_action('admin_enqueue_scripts', $this->admin, 'enqueue_scripts');
+        $this->loader->add_action('add_meta_boxes', $this->admin, 'add_meta_boxes');
+        $this->loader->add_action('save_post', $this->admin, 'save_post');
+        $this->loader->add_action('admin_menu', $this->admin, 'add_admin_menu');
     }
     public function run() {
         $this->loader->run();
     }
-    public function get_version() {
+    public function get_plugin_version() {
         return $this->version;
+    }
+    public function get_plugin_slug() {
+        return $this->plugin_slug;
     }
  }
  
