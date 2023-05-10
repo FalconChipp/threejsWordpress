@@ -32,9 +32,26 @@ class ThreeJS_Model_Viewer_Admin {
 
         echo '<div class="wrap">';
         echo '<h1>' . esc_html(get_admin_page_title()) . '</h1>';
-        echo '<form method="post" action="options.php">';
-            /* Display form fields here */
-        echo '</form>';
+
+        // Get all posts with a '_threejs_model' meta key
+        $args = array(
+            'post_type' => 'post',
+            'meta_key' => '_threejs_model',
+            'posts_per_page' => -1
+        );
+        $query = new WP_Query($args);
+
+        // Display the 3D models in a list
+        echo '<h2>3D Models:</h2>';
+        echo '<ul>';
+        while ($query->have_posts()) : $query->the_post();
+            $threejs_model = get_post_meta(get_the_ID(), '_threejs_model', true);
+            echo '<li><a href="' . get_edit_post_link() . '">' . $threejs_model . '</a></li>';
+        endwhile;
+        echo '</ul>';
+
+        wp_reset_postdata();
+
         echo '</div>';
     }
     public function add_meta_boxes() {
@@ -42,7 +59,7 @@ class ThreeJS_Model_Viewer_Admin {
             'threejs_model_viewer_meta_box',
             __('ThreeJS Model Viewer', 'threejs-model-viewer'),
             array($this, 'render_meta_box'),
-            'post',
+            'any',
             'normal',
             'high'
         );

@@ -1,0 +1,41 @@
+.wrap {
+    margin: 20px;
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.wrap h1 {
+    color: #333;
+    font-size: 24px;
+}
+
+.wrap label {
+    display: block;
+    margin-top: 20px;
+    color: #333;
+}
+
+.wrap input[type="text"],
+.wrap select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.wrap input[type="submit"] {
+    background-color: #0073aa;
+    border-color: #0071a1;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    border: none;
+}
+
+.wrap input[type="submit"]:hover {
+    background-color: #008ec2;
+}
