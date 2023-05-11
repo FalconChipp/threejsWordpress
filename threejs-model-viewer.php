@@ -4,38 +4,46 @@
  * Plugin Name: ThreeJS Model Viewer
  * Plugin URI: FILL_IN_LATER
  * Plugin Description: Plugin to add ThreeJS Based Model Loading on WordPress Websites
- * Version: Alpha 0.0.13
+ * Version: Alpha 0.0.14
  * Author: Ryan Chippendale
  * Author URI: FILL_IN_LATER
  * License: GPL2
  */
 
+ define('version_number', '0.0.14');
+
  if (!defined('WPINC')) {
     die;
  }
-
+/* Main class */
  class ThreeJS_Model_Viewer {
     protected $loader;
     protected $admin;
     protected $plugin_slug;
     protected $version;
 
+    /**
+     *  Main contrustor setting the plugin version and plugin slug
+     * loading dependancy and admin hook functions
+     * */
     public function __construct() {
         $this->plugin_slug = 'threejs-model-viewer';
-        $this->version = '0.0.13';
+        $this->version = version_number;
 
         $this->load_dependencies(); 
         $this->define_admin_hooks();
     }
+    /**
+     *  Loads plugin files 
+     * */
     private function load_dependencies() {
         require_once (plugin_dir_path(__FILE__) . 'includes/class-threejs-model-viewer-loader.php');
         require_once (plugin_dir_path(__FILE__) . 'admin/class-threejs-model-viewer-admin.php');
 
         $this->loader = new ThreeJS_Model_Viewer_Loader(); 
-        $this->admin = new ThreeJS_Model_Viewer_Admin($this->get_plugin_slug(), $this->get_plugin_version());
+        $this->admin = new ThreeJS_Model_Viewer_Admin($this->get_plugin_slug(), version_number);
     }
     private function define_admin_hooks() {
-        // $admin = new ThreeJS_Model_Viewer_Admin($this->get_plugin_version());
         $this->loader->add_action('admin_enqueue_scripts', $this->admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $this->admin, 'enqueue_scripts');
         $this->loader->add_action('add_meta_boxes', $this->admin, 'add_meta_boxes');
@@ -45,9 +53,9 @@
     public function run() {
         $this->loader->run();
     }
-    public function get_plugin_version() {
-        return $this->version;
-    }
+    // public function get_plugin_version() {
+    //     return $this->version;
+    // }
     public function get_plugin_slug() {
         return $this->plugin_slug;
     }
